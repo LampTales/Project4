@@ -5,8 +5,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/wiman/CppSaving/Project4/Matrix.c" "/home/wiman/CppSaving/Project4/CMakeFiles/test.dir/Matrix.c.o"
-  "/home/wiman/CppSaving/Project4/calculate.c" "/home/wiman/CppSaving/Project4/CMakeFiles/test.dir/calculate.c.o"
-  "/home/wiman/CppSaving/Project4/innerTools.c" "/home/wiman/CppSaving/Project4/CMakeFiles/test.dir/innerTools.c.o"
   "/home/wiman/CppSaving/Project4/proMul.c" "/home/wiman/CppSaving/Project4/CMakeFiles/test.dir/proMul.c.o"
   "/home/wiman/CppSaving/Project4/test.c" "/home/wiman/CppSaving/Project4/CMakeFiles/test.dir/test.c.o"
   )

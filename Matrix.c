@@ -51,7 +51,7 @@ void deleteMatrix(struct Matrix** mpp) {
 
 int printMatrix(const struct Matrix* mpointer) {
     if (mpointer == NULL || mpointer->row == 0 || mpointer->col == 0 || mpointer->arr == NULL) {
-        return NULL;
+        return 51;
     }
     for (size_t i = 0; i < (mpointer->row) * (mpointer->col); i++) {
         printf("%f\t", mpointer->arr[i]);

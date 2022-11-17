@@ -1,1 +1,1 @@
-/usr/bin/cc    CMakeFiles/test.dir/test.c.o CMakeFiles/test.dir/innerTools.c.o CMakeFiles/test.dir/Matrix.c.o CMakeFiles/test.dir/calculate.c.o CMakeFiles/test.dir/proMul.c.o  -o test  /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.so 
+/usr/bin/cc -O3 -DNDEBUG   CMakeFiles/test.dir/test.c.o CMakeFiles/test.dir/Matrix.c.o CMakeFiles/test.dir/proMul.c.o  -o test  /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.so 

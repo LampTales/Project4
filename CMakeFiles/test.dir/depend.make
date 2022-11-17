@@ -3,17 +3,8 @@
 
 CMakeFiles/test.dir/Matrix.c.o: Matrix.c
 CMakeFiles/test.dir/Matrix.c.o: Matrix.h
-CMakeFiles/test.dir/Matrix.c.o: innerTools.h
-
-CMakeFiles/test.dir/calculate.c.o: Matrix.h
-CMakeFiles/test.dir/calculate.c.o: calculate.c
-CMakeFiles/test.dir/calculate.c.o: innerTools.h
-
-CMakeFiles/test.dir/innerTools.c.o: Matrix.h
-CMakeFiles/test.dir/innerTools.c.o: innerTools.c
 
 CMakeFiles/test.dir/proMul.c.o: Matrix.h
-CMakeFiles/test.dir/proMul.c.o: innerTools.h
 CMakeFiles/test.dir/proMul.c.o: proMul.c
 
 CMakeFiles/test.dir/test.c.o: Matrix.h

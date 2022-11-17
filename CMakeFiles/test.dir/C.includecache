@@ -13,32 +13,8 @@ stdio.h
 -
 stdlib.h
 -
-innerTools.h
-/home/wiman/CppSaving/Project4/innerTools.h
 
 /home/wiman/CppSaving/Project4/Matrix.h
-stddef.h
--
-
-/home/wiman/CppSaving/Project4/calculate.c
-stdio.h
--
-stdlib.h
--
-Matrix.h
-/home/wiman/CppSaving/Project4/Matrix.h
-innerTools.h
-/home/wiman/CppSaving/Project4/innerTools.h
-
-/home/wiman/CppSaving/Project4/innerTools.c
-stdio.h
--
-stdlib.h
--
-Matrix.h
-/home/wiman/CppSaving/Project4/Matrix.h
-
-/home/wiman/CppSaving/Project4/innerTools.h
 stddef.h
 -
 
@@ -49,8 +25,6 @@ stdlib.h
 -
 Matrix.h
 /home/wiman/CppSaving/Project4/Matrix.h
-innerTools.h
-/home/wiman/CppSaving/Project4/innerTools.h
 immintrin.h
 -
 arm_neon.h

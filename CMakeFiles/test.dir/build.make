@@ -70,22 +70,9 @@ CMakeFiles/test.dir/test.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test.dir/test.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/wiman/CppSaving/Project4/test.c -o CMakeFiles/test.dir/test.c.s
 
-CMakeFiles/test.dir/innerTools.c.o: CMakeFiles/test.dir/flags.make
-CMakeFiles/test.dir/innerTools.c.o: innerTools.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test.dir/innerTools.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test.dir/innerTools.c.o   -c /home/wiman/CppSaving/Project4/innerTools.c
-
-CMakeFiles/test.dir/innerTools.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test.dir/innerTools.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/wiman/CppSaving/Project4/innerTools.c > CMakeFiles/test.dir/innerTools.c.i
-
-CMakeFiles/test.dir/innerTools.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test.dir/innerTools.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/wiman/CppSaving/Project4/innerTools.c -o CMakeFiles/test.dir/innerTools.c.s
-
 CMakeFiles/test.dir/Matrix.c.o: CMakeFiles/test.dir/flags.make
 CMakeFiles/test.dir/Matrix.c.o: Matrix.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test.dir/Matrix.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test.dir/Matrix.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test.dir/Matrix.c.o   -c /home/wiman/CppSaving/Project4/Matrix.c
 
 CMakeFiles/test.dir/Matrix.c.i: cmake_force
@@ -96,22 +83,9 @@ CMakeFiles/test.dir/Matrix.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test.dir/Matrix.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/wiman/CppSaving/Project4/Matrix.c -o CMakeFiles/test.dir/Matrix.c.s
 
-CMakeFiles/test.dir/calculate.c.o: CMakeFiles/test.dir/flags.make
-CMakeFiles/test.dir/calculate.c.o: calculate.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/test.dir/calculate.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test.dir/calculate.c.o   -c /home/wiman/CppSaving/Project4/calculate.c
-
-CMakeFiles/test.dir/calculate.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test.dir/calculate.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/wiman/CppSaving/Project4/calculate.c > CMakeFiles/test.dir/calculate.c.i
-
-CMakeFiles/test.dir/calculate.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test.dir/calculate.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/wiman/CppSaving/Project4/calculate.c -o CMakeFiles/test.dir/calculate.c.s
-
 CMakeFiles/test.dir/proMul.c.o: CMakeFiles/test.dir/flags.make
 CMakeFiles/test.dir/proMul.c.o: proMul.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test.dir/proMul.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test.dir/proMul.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test.dir/proMul.c.o   -c /home/wiman/CppSaving/Project4/proMul.c
 
 CMakeFiles/test.dir/proMul.c.i: cmake_force
@@ -125,24 +99,20 @@ CMakeFiles/test.dir/proMul.c.s: cmake_force
 # Object files for target test
 test_OBJECTS = \
 "CMakeFiles/test.dir/test.c.o" \
-"CMakeFiles/test.dir/innerTools.c.o" \
 "CMakeFiles/test.dir/Matrix.c.o" \
-"CMakeFiles/test.dir/calculate.c.o" \
 "CMakeFiles/test.dir/proMul.c.o"
 
 # External object files for target test
 test_EXTERNAL_OBJECTS =
 
 test: CMakeFiles/test.dir/test.c.o
-test: CMakeFiles/test.dir/innerTools.c.o
 test: CMakeFiles/test.dir/Matrix.c.o
-test: CMakeFiles/test.dir/calculate.c.o
 test: CMakeFiles/test.dir/proMul.c.o
 test: CMakeFiles/test.dir/build.make
-test: /usr/lib/gcc/x86_64-linux-gnu/7/libgomp.so
+test: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
 test: /usr/lib/x86_64-linux-gnu/libpthread.so
 test: CMakeFiles/test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

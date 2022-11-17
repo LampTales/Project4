@@ -79,12 +79,32 @@ int matmul_improved(const struct Matrix* mp1, const struct Matrix* mp2, struct M
         answer->arr = fpo;
     }
 
-    //loading data
+    // loading data
     size_t offset = 8 - (mp1->col % 8);
-    float* p1 = (float*)aligned_alloc(256, (mp1->row) * (mp1->col + offset) * sizeof(float));
-    float* p2 = (float*)aligned_alloc(256, (mp2->row + offset) * (mp2->col) * sizeof(float));
+    size_t offsetLen = offset + mp1->col;
+    float* p1 = (float*)aligned_alloc(256, (mp1->row) * offsetLen * sizeof(float));
+    for (size_t i = 0; i < mp1->row; i++) {
+        size_t startO = i * (mp1->col);
+        size_t startN = i * offsetLen;
+        for (size_t j = 0; i < mp1->col; j++) {
+            p1[startN + j] = mp1->arr[startO + j];
+        }
+        for (size_t j = mp1->col; j < offsetLen; j++) {
+            p1[startN + j] = 0;
+        }
+    }
+    float* p2 = (float*)aligned_alloc(256, (mp1->row) * offsetLen * sizeof(float));
+    for (size_t i = 0; i < mp1->row; i++) {
+        size_t cntO = 0;
+        size_t startN = i * offsetLen;
+        for (size_t j = 0; j < mp1->col; j++)
+        {
+            /* code */
+        }
+        
+    }
 
-// using SIMD
+    // using SIMD
 #ifdef WITH_AVX2
     if (n % 8 != 0) {
         printf("The size n must be a multiple of 8.\n");

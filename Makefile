@@ -150,60 +150,6 @@ Matrix.c.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/Matrix.c.s
 .PHONY : Matrix.c.s
 
-calculate.o: calculate.c.o
-
-.PHONY : calculate.o
-
-# target to build an object file
-calculate.c.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/calculate.c.o
-.PHONY : calculate.c.o
-
-calculate.i: calculate.c.i
-
-.PHONY : calculate.i
-
-# target to preprocess a source file
-calculate.c.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/calculate.c.i
-.PHONY : calculate.c.i
-
-calculate.s: calculate.c.s
-
-.PHONY : calculate.s
-
-# target to generate assembly for a file
-calculate.c.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/calculate.c.s
-.PHONY : calculate.c.s
-
-innerTools.o: innerTools.c.o
-
-.PHONY : innerTools.o
-
-# target to build an object file
-innerTools.c.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/innerTools.c.o
-.PHONY : innerTools.c.o
-
-innerTools.i: innerTools.c.i
-
-.PHONY : innerTools.i
-
-# target to preprocess a source file
-innerTools.c.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/innerTools.c.i
-.PHONY : innerTools.c.i
-
-innerTools.s: innerTools.c.s
-
-.PHONY : innerTools.s
-
-# target to generate assembly for a file
-innerTools.c.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/innerTools.c.s
-.PHONY : innerTools.c.s
-
 proMul.o: proMul.c.o
 
 .PHONY : proMul.o
@@ -270,12 +216,6 @@ help:
 	@echo "... Matrix.o"
 	@echo "... Matrix.i"
 	@echo "... Matrix.s"
-	@echo "... calculate.o"
-	@echo "... calculate.i"
-	@echo "... calculate.s"
-	@echo "... innerTools.o"
-	@echo "... innerTools.i"
-	@echo "... innerTools.s"
 	@echo "... proMul.o"
 	@echo "... proMul.i"
 	@echo "... proMul.s"

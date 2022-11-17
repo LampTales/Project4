@@ -16,7 +16,7 @@ set(CMAKE_BUILD_TYPE "Release")
 
 project(proMatrix)
 
-ADD_EXECUTABLE(test test.c innerTools.c Matrix.c calculate.c proMul.c)
+ADD_EXECUTABLE(test test.c Matrix.c proMul.c)
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
