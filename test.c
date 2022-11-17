@@ -1,24 +1,37 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stddef.h>
+#include <time.h>
 #include "Matrix.h"
 
-int main() {
-    struct Matrix* x = createMatrix(1, 1);
-    // struct Matrix* y = createMatrix(1, 0); // this is illegal
-    // if (y == NULL) { // this should be true
-    //     printf("y is not created\n");
-    // }
+#define TIME_START start = clock();
+#define TIME_END(NAME) \
+    end = clock();     \
+    printf(NAME);      \
+    printf(" takes %ldms\n", (end - start)/1000);
 
-    float array1[] = {1, 2, 3, 4, 5, 6};
-    float array2[] = {2, 3, 4, 5, 6, 7};
-    float array3[] = {1, 2, 3, 4};
-    float* fp1 = array1;
-    float* fp2 = array2;
-    float* fp3 = array3;
-    struct Matrix* m1 = createMatrixWithIni(2, 3, fp1);
-    struct Matrix* m2 = createMatrixWithIni(3, 2, fp2);
-    struct Matrix* m3 = createMatrixWithIni(2, 2, fp3);
+int main() {
+    time_t start;
+    time_t end;
+
+    struct Matrix* x = createMatrix(1, 1);
+    struct Matrix* y = createMatrix(1, 1);
+    struct Matrix* z = createMatrix(1, 1);
+    struct Matrix* t = createMatrix(1, 1);
+
+    TIME_START
+    struct Matrix* m1 = createTestMatrix(1600, 1600);
+    struct Matrix* m2 = createTestMatrix(1600, 1600);
+    TIME_END("create matrix")
+    // float array1[] = {1, 2, 3, 4, 5, 6};
+    // float array2[] = {2, 3, 4, 5, 6, 7};
+    // float array3[] = {1, 2, 3, 4};
+    // float* fp1 = array1;
+    // float* fp2 = array2;
+    // float* fp3 = array3;
+    // struct Matrix* m1 = createMatrixWithIni(2, 3, fp1);
+    // struct Matrix* m2 = createMatrixWithIni(3, 2, fp2);
+    // struct Matrix* m3 = createMatrixWithIni(2, 2, fp3);
 
     // float ans = 0;
     // float* ap = &ans;
@@ -45,24 +58,35 @@ int main() {
     // printf("Test for matrix operation:\n");
     // printError(multiplyMatrix(m1, m3, x));   // this is illegal
     // printError(multiplyMatrix(m1, m2, m2));  // this is illegal
-    matmul_plain(m1, m2, x);   // this is legal
-    printMatrix(x);
+    TIME_START
+    oldMul(m1, m2, y);
+    TIME_END("oldMul")
+    // printMatrix(y);
+    // printf("\n");
+    TIME_START
+    matmul_plain(m1, m2, x);  // this is legal
+    TIME_END("Plain")
+    // printMatrix(x);
+    // printf("\n");
+    TIME_START
+    matmul_improved(m1, m2, z);
+    TIME_END("SIMD")
+    // printMatrix(z);
 
-    // deleteMatrix(&m1);
-    // deleteMatrix(&m2);
-    // deleteMatrix(&m3);
-    // deleteMatrix(&m4);
-    // deleteMatrix(&x);
+    TIME_START
+    matmul_improvedMP(m1, m2, t);
+    TIME_END("SIMD")
+
+    deleteMatrix(&m1);
+    deleteMatrix(&m2);
+    deleteMatrix(&x);
+    deleteMatrix(&y);
+    deleteMatrix(&z);
+    deleteMatrix(&t);
     // if (x == NULL) { // this should be true
     //     printf("x is NULL after delete\n");
     // }
     // return 0;
-
-
-
-
-
-
 
     // size_t nSize = 8;
     // //float * p1 = new float[nSize](); //the memory is not aligned
@@ -76,7 +100,7 @@ int main() {
     // p1[nSize-1] = 2.0f;
     // p2[nSize-1] = 1.1f;
     // // float * p2 = (float*)malloc(256 * nSize * sizeof(float));
-    
+
     // float result = 0.0f;
 
     // // TIME_START

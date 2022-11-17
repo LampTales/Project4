@@ -18,6 +18,22 @@ struct Matrix* createMatrix(size_t row, size_t col) {
     return mpo;
 }
 
+struct Matrix* createTestMatrix(size_t row, size_t col) {
+    if (row == 0 || col == 0) {
+        return NULL;
+    }
+
+    float* fpo = (float*)malloc(row * col * sizeof(float));
+    for (size_t i = 0; i < row * col; i++) {
+        fpo[i] = i;
+    }
+    struct Matrix* mpo = (struct Matrix*)malloc(sizeof(struct Matrix));
+    mpo->row = row;
+    mpo->col = col;
+    mpo->arr = fpo;
+    return mpo;
+}
+
 struct Matrix* createMatrixWithIni(size_t row, size_t col, const float* fpointer) {
     if (row == 0 || col == 0 || fpointer == NULL) {
         return NULL;
