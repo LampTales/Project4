@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include "Matrix.h"
 
 int main() {
@@ -57,7 +58,7 @@ int main() {
     // }
     // return 0;
 
-    size_t nSize = 256000000;
+    size_t nSize = 8;
     //float * p1 = new float[nSize](); //the memory is not aligned
     //float * p2 = new float[nSize](); //the memory is not aligned
 
