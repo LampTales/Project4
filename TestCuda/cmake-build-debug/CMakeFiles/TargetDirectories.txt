@@ -1,3 +1,0 @@
-C:/Users/ASUS/CLionProjects/TestCuda/cmake-build-debug/CMakeFiles/TestCuda.dir
-C:/Users/ASUS/CLionProjects/TestCuda/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/ASUS/CLionProjects/TestCuda/cmake-build-debug/CMakeFiles/rebuild_cache.dir
