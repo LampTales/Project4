@@ -1,3 +1,0 @@
-/home/wiman/CppSaving/Project4/CMakeFiles/rebuild_cache.dir
-/home/wiman/CppSaving/Project4/CMakeFiles/edit_cache.dir
-/home/wiman/CppSaving/Project4/CMakeFiles/test.dir
