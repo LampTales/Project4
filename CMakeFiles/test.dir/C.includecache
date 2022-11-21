@@ -10,17 +10,17 @@
 stddef.h
 -
 
-/home/wiman/CppSaving/Project4/proMul.c
+/home/wiman/CppSaving/Project4/test.c
+omp.h
+-
+stddef.h
+-
 stdio.h
 -
 stdlib.h
 -
+time.h
+-
 Matrix.h
 /home/wiman/CppSaving/Project4/Matrix.h
-immintrin.h
--
-arm_neon.h
--
-omp.h
--
 

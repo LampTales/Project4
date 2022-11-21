@@ -109,8 +109,6 @@ test: CMakeFiles/test.dir/test.c.o
 test: CMakeFiles/test.dir/Matrix.c.o
 test: CMakeFiles/test.dir/proMul.c.o
 test: CMakeFiles/test.dir/build.make
-test: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
-test: /usr/lib/x86_64-linux-gnu/libpthread.so
 test: CMakeFiles/test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/wiman/CppSaving/Project4/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test.dir/link.txt --verbose=$(VERBOSE)

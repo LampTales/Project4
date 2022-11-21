@@ -16,6 +16,8 @@ int matmul_improved(const struct Matrix* mp1, const struct Matrix* mp2, struct M
 
 int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer);
 
+int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer);
+
 struct Matrix* createMatrix(size_t row, size_t col);
 
 struct Matrix* createMatrixWithIni(size_t row, size_t col, const float* fpointer);

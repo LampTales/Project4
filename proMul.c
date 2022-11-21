@@ -221,14 +221,15 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
     // using SIMD
 #ifdef WITH_AVX2
     printf("AVX2 ON\n");
-    omp_set_num_threads(8);
-#pragma omp parallel for
+    // omp_set_num_threads(20);
+    __m256 a, b, c;
+    float sum[8] = {0};
+#pragma omp parallel for private(a, b, c, sum)
     for (size_t i = 0; i < answer->row; i++) {
+        // printf("here is %d", omp_get_thread_num());
+        size_t asp = i * offsetLen;
         for (size_t j = 0; j < answer->col; j++) {
-            float sum[8] = {0};
-            __m256 a, b;
             __m256 c = _mm256_setzero_ps();
-            size_t asp = i * offsetLen;
             size_t bsp = j * offsetLen;
             for (size_t cnt = 0; cnt < offsetLen; cnt += 8) {
                 a = _mm256_loadu_ps(p1 + asp + cnt);
@@ -250,4 +251,59 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
     free(p1);
     free(p2);
     return 110;
+}
+
+int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer) {
+    // reporting or fixing the illegal cases
+    if (answer->row != mp1->row || answer->col != mp2->col) {
+        answer->row = mp1->row;
+        answer->col = mp2->col;
+        if (answer->arr != NULL) {
+            free(answer->arr);
+            answer->arr = NULL;
+        }
+    }
+    if (answer->arr == NULL) {
+        float* fpo = (float*)malloc(answer->row * answer->col * sizeof(float));
+        answer->arr = fpo;
+    }
+
+    size_t blockSize = 4;
+    size_t blockArea = blockSize * blockSize;
+
+    size_t ARowOffset = (blockSize - mp1->row % blockSize) % blockSize;
+    size_t AColOffset = (blockSize - mp1->col % blockSize) % blockSize;
+    size_t ARowOffLen = mp1->row + ARowOffset;
+    size_t AColOffLen = mp1->col + AColOffset;
+    size_t ARowBlockLen = ARowOffLen / blockSize;
+    size_t AColBlockLen = AColOffLen / blockSize;
+    float* a = (float*)malloc(ARowOffLen * AColOffLen * sizeof(float));
+
+    // test
+    // for (size_t i = 0; i < ARowOffLen * AColOffLen; i++) {
+    //     a[i] = 1;
+    // }
+
+    // set value
+    {
+        for (int rb = 0; rb < ARowBlockLen; rb++) {
+            size_t i = blockArea * rb * AColBlockLen + (AColBlockLen - 1) * blockArea;
+            for (size_t smallrow = 0; smallrow < blockSize; smallrow++) {
+                for (size_t spot = blockSize - AColOffset; spot < blockSize; spot++) {
+                    a[i + smallrow * blockSize + spot] = 0;
+                }
+            }
+        }
+        size_t fmark = blockArea * (ARowBlockLen - 1) * AColBlockLen;
+        for (size_t cb = 0; cb < AColBlockLen; cb++) {
+            for (size_t mark = (blockSize - ARowOffset) * blockSize; mark < blockArea; mark++) {
+                a[fmark + cb * blockArea + mark] = 0;
+            }
+        }
+        for (size_t i = 0; i < mp1->row * mp1->col; i++)
+        {
+            /* code */
+        }
+        
+    }
 }
