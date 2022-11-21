@@ -9,6 +9,8 @@
         "vector": "c",
         "string_view": "c",
         "initializer_list": "c",
-        "cblas.h": "c"
+        "cblas.h": "c",
+        "random": "c",
+        "immintrin.h": "c"
     }
 }

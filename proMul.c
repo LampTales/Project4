@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "Matrix.h"
 
-#ifdef WITH_AVX2
+// #ifdef WITH_AVX2
 #include <immintrin.h>
-#endif
+// #endif
 
 #ifdef WITH_NEON
 #include <arm_neon.h>
@@ -56,7 +56,7 @@ int matmul_plain(const struct Matrix* mp1, const struct Matrix* mp2, struct Matr
 
     // loading data
     // printf("loading data for p1\n");
-    size_t offset = 8 - (mp1->col % 8);
+    size_t offset = (8 - (mp1->col % 8)) % 8;
     size_t offsetLen = offset + mp1->col;
     float* p1 = (float*)aligned_alloc(256, (mp1->row) * offsetLen * sizeof(float));
     for (size_t i = 0; i < mp1->row; i++) {
@@ -118,7 +118,7 @@ int matmul_improved(const struct Matrix* mp1, const struct Matrix* mp2, struct M
     }
 
     // loading data
-    size_t offset = 8 - (mp1->col % 8);
+    size_t offset = (8 - (mp1->col % 8)) % 8;
     size_t offsetLen = offset + mp1->col;
     float* p1 = (float*)aligned_alloc(256, (mp1->row) * offsetLen * sizeof(float));
     for (size_t i = 0; i < mp1->row; i++) {
@@ -146,7 +146,7 @@ int matmul_improved(const struct Matrix* mp1, const struct Matrix* mp2, struct M
 
     // using SIMD
 #ifdef WITH_AVX2
-    printf("AVX2 ON\n");
+    printf("From SIMD: AVX ON\n");
     for (size_t i = 0; i < answer->row; i++) {
         for (size_t j = 0; j < answer->col; j++) {
             float sum[8] = {0};
@@ -220,7 +220,7 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
 
     // using SIMD
 #ifdef WITH_AVX2
-    printf("AVX2 ON\n");
+    printf("From OMP: AVX2 ON\n");
     // omp_set_num_threads(20);
     __m256 a, b, c;
     float sum[8] = {0};
@@ -268,42 +268,97 @@ int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struc
         answer->arr = fpo;
     }
 
-    size_t blockSize = 4;
+    size_t blockSize = 512;
     size_t blockArea = blockSize * blockSize;
 
-    size_t ARowOffset = (blockSize - mp1->row % blockSize) % blockSize;
-    size_t AColOffset = (blockSize - mp1->col % blockSize) % blockSize;
-    size_t ARowOffLen = mp1->row + ARowOffset;
-    size_t AColOffLen = mp1->col + AColOffset;
-    size_t ARowBlockLen = ARowOffLen / blockSize;
-    size_t AColBlockLen = AColOffLen / blockSize;
-    float* a = (float*)malloc(ARowOffLen * AColOffLen * sizeof(float));
-
-    // test
-    // for (size_t i = 0; i < ARowOffLen * AColOffLen; i++) {
-    //     a[i] = 1;
-    // }
-
-    // set value
-    {
-        for (int rb = 0; rb < ARowBlockLen; rb++) {
-            size_t i = blockArea * rb * AColBlockLen + (AColBlockLen - 1) * blockArea;
-            for (size_t smallrow = 0; smallrow < blockSize; smallrow++) {
-                for (size_t spot = blockSize - AColOffset; spot < blockSize; spot++) {
-                    a[i + smallrow * blockSize + spot] = 0;
+    size_t AblockRow = mp1->row / blockSize;
+    size_t AblockCol = mp1->col / blockSize;
+    float* p1 = (float*)aligned_alloc(256, (mp1->row) * (mp1->col) * sizeof(float));
+    size_t ai = 0;
+    for (size_t rbc = 0; rbc < AblockRow; rbc++) {
+        for (size_t cbc = 0; cbc < AblockCol; cbc++) {
+            size_t spot1 = rbc * AblockCol * blockArea + cbc * blockSize;
+            for (size_t smr = 0; smr < blockSize; smr++) {
+                size_t spot2 = smr * mp1->col;
+                for (size_t x = 0; x < blockSize; x++) {
+                    p1[ai] = mp1->arr[spot1 + spot2 + x];
+                    ai++;
                 }
             }
         }
-        size_t fmark = blockArea * (ARowBlockLen - 1) * AColBlockLen;
-        for (size_t cb = 0; cb < AColBlockLen; cb++) {
-            for (size_t mark = (blockSize - ARowOffset) * blockSize; mark < blockArea; mark++) {
-                a[fmark + cb * blockArea + mark] = 0;
+    }
+
+    size_t BblockRow = mp2->row / blockSize;
+    size_t BblockCol = mp2->col / blockSize;
+    float* p2 = (float*)aligned_alloc(256, (mp2->row) * (mp2->col) * sizeof(float));
+    size_t bi = 0;
+    for (size_t cbc = 0; cbc < BblockCol; cbc++) {
+        for (size_t rbc = 0; rbc < BblockRow; rbc++) {
+            size_t spot1 = rbc * BblockCol * blockArea + cbc * blockSize;
+            for (size_t smc = 0; smc < blockSize; smc++) {
+                for (size_t x = 0; x < blockSize; x++) {
+                    p2[bi] = mp2->arr[spot1 + smc + mp2->col * x];
+                    bi++;
+                }
             }
         }
-        for (size_t i = 0; i < mp1->row * mp1->col; i++)
-        {
-            /* code */
-        }
-        
     }
+
+    for (size_t i = 0; i < answer->row * answer->col; i++) {
+        answer->arr[i] = 0;
+    }
+
+#ifdef WITH_AVX2
+    printf("From DIV: AVX2 ON\n");
+    float* store = (float*)malloc(blockArea * sizeof(float));
+    for (size_t i = 0; i < AblockRow; i++) {      // every block row
+        // printf("i = %ld\n", i);
+        for (size_t j = 0; j < BblockCol; j++) {  // every block col
+            for (size_t bcnt = 0; bcnt < AblockCol; bcnt++) {
+                innerMul(p1 + (i * AblockCol + bcnt) * blockArea, p2 + (j * BblockRow + bcnt) * blockArea, store, blockSize);
+                size_t spot = 0;
+                size_t spotcnt1 = i * BblockCol * blockArea + j * blockSize;
+                for (size_t x = 0; x < blockSize; x++) {
+                    size_t spotcnt2 = x * answer->col;
+                    for (size_t y = 0; y < blockSize; y++) {
+                        answer->arr[spotcnt1 + spotcnt2 + y] += store[spot];
+                        spot++;
+                    }
+                }
+            }
+        }
+    }
+    free(store);
+#else
+    printf("AVX2 is not supported\n");
+    free(p1);
+    free(p2);
+    return 0;
+#endif
+
+    free(p1);
+    free(p2);
+}
+
+inline void innerMul(float* p1, float* p2, float* ans, size_t SIZE) {
+#ifdef WITH_AVX2
+    __m256 a, b, c;
+    float sum[8] = {0};
+#pragma omp parallel for private(a, b, c, sum)
+    for (size_t i = 0; i < SIZE; i++) {
+        // printf("here is %d", omp_get_thread_num());
+        size_t asp = i * SIZE;
+        for (size_t j = 0; j < SIZE; j++) {
+            __m256 c = _mm256_setzero_ps();
+            size_t bsp = j * SIZE;
+            for (size_t cnt = 0; cnt < SIZE; cnt += 8) {
+                a = _mm256_loadu_ps(p1 + asp + cnt);
+                b = _mm256_loadu_ps(p2 + bsp + cnt);
+                c = _mm256_add_ps(c, _mm256_mul_ps(a, b));
+            }
+            _mm256_storeu_ps(sum, c);
+            ans[i * SIZE + j] = sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] + sum[7];
+        }
+    }
+#endif
 }
