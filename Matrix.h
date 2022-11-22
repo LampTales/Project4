@@ -18,6 +18,8 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
 
 int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer);
 
+int matmul_BLAS(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer);
+
 void innerMul(float* p1, float* p2, float* ans, size_t SIZE);
 
 struct Matrix* createMatrix(size_t row, size_t col);

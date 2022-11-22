@@ -11,7 +11,7 @@
     printf(NAME);          \
     printf(" takes %fs\n", (float)(end - start));
 
-#define SIZE 1024
+#define SIZE 8192
 
 // printf(" takes %fs\n", (float)(end - start)/CLOCKS_PER_SEC);
 
@@ -59,6 +59,10 @@ int main() {
     TIME_END("DIV")
     // printMatrix(z);
     // printf("\n");
+
+    TIME_START
+    matmul_BLAS(m1, m2, t);
+    TIME_END("BLAS")
     
 
     deleteMatrix(&m1);

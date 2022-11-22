@@ -1,1 +1,1 @@
-/usr/bin/cc  -O3 -fopenmp -O3 -DNDEBUG    CMakeFiles/test.dir/test.c.o CMakeFiles/test.dir/Matrix.c.o CMakeFiles/test.dir/proMul.c.o  -o test 
+/usr/bin/cc -O3 -DNDEBUG   CMakeFiles/test.dir/test.c.o CMakeFiles/test.dir/Matrix.c.o CMakeFiles/test.dir/proMul.c.o  -o test  -lblas -fopenmp 
