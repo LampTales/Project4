@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.9)
 
 SET(ENVIRONMENT "CC")
 
-#add_definitions(-DWITH_NEON)
 add_definitions(-DWITH_AVX2)
-
-add_definitions(-mavx2)
 
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
 

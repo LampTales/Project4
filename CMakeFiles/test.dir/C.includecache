@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/home/wiman/CppSaving/Project4/Matrix.c
+Matrix.h
+/home/wiman/CppSaving/Project4/Matrix.h
+stdio.h
+-
+stdlib.h
+-
+
 /home/wiman/CppSaving/Project4/Matrix.h
 stddef.h
 -
@@ -25,4 +33,18 @@ cblas.h
 /home/wiman/CppSaving/Project4/cblas.h
 omp.h
 -
+
+/home/wiman/CppSaving/Project4/test.c
+omp.h
+-
+stddef.h
+-
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+Matrix.h
+/home/wiman/CppSaving/Project4/Matrix.h
 
