@@ -11,7 +11,7 @@
     printf(NAME);          \
     printf(" takes %fs\n", (float)(end - start));
 
-#define SIZE 8192
+#define SIZE 1024
 
 // printf(" takes %fs\n", (float)(end - start)/CLOCKS_PER_SEC);
 

@@ -9,7 +9,7 @@
     printf(NAME);          \
     printf(" takes %fs\n", (float)(end - start)/CLOCKS_PER_SEC);
 
-#define SIZE 64000
+#define SIZE 8000
 
 int main() {
     time_t start;

@@ -2,13 +2,15 @@
 #include <stdlib.h>
 #include "Matrix.h"
 
-// #ifdef WITH_AVX2
+#ifdef __AVX2__
 #include <immintrin.h>
-// #endif
+#endif
 
-#ifdef WITH_NEON
+#ifdef __ARM_NEON
 #include <arm_neon.h>
 #endif
+
+#include "cblas.h"
 
 #include <omp.h>
 
@@ -145,7 +147,7 @@ int matmul_improved(const struct Matrix* mp1, const struct Matrix* mp2, struct M
     }
 
     // using SIMD
-#ifdef WITH_AVX2
+#ifdef __AVX2__
     printf("From SIMD: AVX ON\n");
     for (size_t i = 0; i < answer->row; i++) {
         for (size_t j = 0; j < answer->col; j++) {
@@ -191,7 +193,7 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
     }
 
     // loading data
-    size_t offset = 8 - (mp1->col % 8);
+    size_t offset = (8 - (mp1->col % 8)) % 8;
     size_t offsetLen = offset + mp1->col;
     float* p1 = (float*)aligned_alloc(256, (mp1->row) * offsetLen * sizeof(float));
     for (size_t i = 0; i < mp1->row; i++) {
@@ -216,10 +218,10 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
             p2[startN + j] = 0;
         }
     }
-    printf("core num: %d\n", omp_get_num_procs());
+    // printf("core num: %d\n", omp_get_num_procs());
 
     // using SIMD
-#ifdef WITH_AVX2
+#ifdef __AVX2__
     printf("From OMP: AVX2 ON\n");
     // omp_set_num_threads(20);
     __m256 a, b, c;
@@ -245,12 +247,12 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
     printf("AVX2 is not supported\n");
     free(p1);
     free(p2);
-    return 0.0;
+    return 0;
 #endif
 
     free(p1);
     free(p2);
-    return 110;
+    return 1;
 }
 
 int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer) {
@@ -308,10 +310,10 @@ int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struc
         answer->arr[i] = 0;
     }
 
-#ifdef WITH_AVX2
+#ifdef __AVX2__
     printf("From DIV: AVX2 ON\n");
     float* store = (float*)malloc(blockArea * sizeof(float));
-    for (size_t i = 0; i < AblockRow; i++) {      // every block row
+    for (size_t i = 0; i < AblockRow; i++) {  // every block row
         // printf("i = %ld\n", i);
         for (size_t j = 0; j < BblockCol; j++) {  // every block col
             for (size_t bcnt = 0; bcnt < AblockCol; bcnt++) {
@@ -335,9 +337,9 @@ int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struc
     free(p2);
     return 0;
 #endif
-
     free(p1);
     free(p2);
+    return 1;
 }
 
 inline void innerMul(float* p1, float* p2, float* ans, size_t SIZE) {
@@ -360,5 +362,33 @@ inline void innerMul(float* p1, float* p2, float* ans, size_t SIZE) {
             ans[i * SIZE + j] = sum[0] + sum[1] + sum[2] + sum[3] + sum[4] + sum[5] + sum[6] + sum[7];
         }
     }
+#else
+    printf("AVX2 is not supported\n");
 #endif
+}
+
+int matmul_BLAS(const struct Matrix* mp1, const struct Matrix* mp2, struct Matrix* answer) {
+    // reporting or fixing the illegal cases
+    if (answer->row != mp1->row || answer->col != mp2->col) {
+        answer->row = mp1->row;
+        answer->col = mp2->col;
+        if (answer->arr != NULL) {
+            free(answer->arr);
+            answer->arr = NULL;
+        }
+    }
+    if (answer->arr == NULL) {
+        float* fpo = (float*)malloc(answer->row * answer->col * sizeof(float));
+        answer->arr = fpo;
+    }
+
+    size_t M = mp1->row;
+    size_t K = mp1->col;
+    size_t N = mp2->col;
+    float alpha = 1;
+    float beta = 0;
+    size_t lda = M;
+    size_t ldb = K;
+    size_t ldc = N;
+    cblas_sgemm(CblasRowMajor, CblasTrans, CblasTrans, M, N, K, alpha, mp1->arr, lda, mp2->arr, ldb, beta, answer->arr, ldc);
 }
