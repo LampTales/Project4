@@ -18,10 +18,3 @@ add_compile_options(-mavx2 -O3 -fopenmp)
 link_libraries(-lblas -fopenmp)
 
 ADD_EXECUTABLE(test test.c Matrix.c proMul.c)
-
-# FIND_PACKAGE(OpenMP REQUIRED)
-# if(OPENMP_FOUND)
-# message("OPENMP FOUND")
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-# endif()

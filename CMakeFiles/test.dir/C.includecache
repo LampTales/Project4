@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wiman/CppSaving/Project4/Matrix.h
+stddef.h
+-
+
+/home/wiman/CppSaving/Project4/proMul.c
+stdio.h
+-
+stdlib.h
+-
+Matrix.h
+/home/wiman/CppSaving/Project4/Matrix.h
+immintrin.h
+-
+arm_neon.h
+-
+cblas.h
+/home/wiman/CppSaving/Project4/cblas.h
+omp.h
+-
+

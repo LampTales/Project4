@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Matrix.h"
 
-#ifdef __AVX2__
+#ifdef WITH_AVX2
 #include <immintrin.h>
 #endif
 
@@ -147,7 +147,7 @@ int matmul_improved(const struct Matrix* mp1, const struct Matrix* mp2, struct M
     }
 
     // using SIMD
-#ifdef __AVX2__
+#ifdef WITH_AVX2
     printf("From SIMD: AVX ON\n");
     for (size_t i = 0; i < answer->row; i++) {
         for (size_t j = 0; j < answer->col; j++) {
@@ -221,7 +221,7 @@ int matmul_improvedMP(const struct Matrix* mp1, const struct Matrix* mp2, struct
     // printf("core num: %d\n", omp_get_num_procs());
 
     // using SIMD
-#ifdef __AVX2__
+#ifdef WITH_AVX2
     printf("From OMP: AVX2 ON\n");
     // omp_set_num_threads(20);
     __m256 a, b, c;
@@ -310,7 +310,7 @@ int matmul_improvedDIV(const struct Matrix* mp1, const struct Matrix* mp2, struc
         answer->arr[i] = 0;
     }
 
-#ifdef __AVX2__
+#ifdef WITH_AVX2
     printf("From DIV: AVX2 ON\n");
     float* store = (float*)malloc(blockArea * sizeof(float));
     for (size_t i = 0; i < AblockRow; i++) {  // every block row
