@@ -29,10 +29,10 @@ immintrin.h
 -
 arm_neon.h
 -
-cblas.h
-/home/wiman/CppSaving/Project4/cblas.h
 omp.h
 -
+cblas.h
+/home/wiman/CppSaving/Project4/cblas.h
 
 /home/wiman/CppSaving/Project4/test.c
 omp.h

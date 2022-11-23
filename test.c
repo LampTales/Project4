@@ -11,7 +11,7 @@
     printf(NAME);          \
     printf(" takes %fs\n", (float)(end - start));
 
-#define SIZE 8192
+#define SIZE 1600
 
 // printf(" takes %fs\n", (float)(end - start)/CLOCKS_PER_SEC);
 
@@ -23,46 +23,39 @@ int main() {
     struct Matrix* y = createMatrix(1, 1);
     struct Matrix* z = createMatrix(1, 1);
     struct Matrix* t = createMatrix(1, 1);
+    struct Matrix* u = createMatrix(1, 1);
+    struct Matrix* v = createMatrix(1, 1);
+
+    printf("test size: %d\n", SIZE);
 
     TIME_START
     struct Matrix* m1 = createTestMatrix(SIZE, SIZE);
     struct Matrix* m2 = createTestMatrix(SIZE, SIZE);
     TIME_END("create matrix")
     
-    // TIME_START
-    // oldMul(m1, m2, y);
-    // TIME_END("oldMul")
-    // printMatrix(y);
-    // printf("\n");
-    // TIME_START
-    // matmul_plain(m1, m2, x);  // this is legal
-    // TIME_END("Plain")
-    // printMatrix(x);
-    // printf("\n");
-    // TIME_START
-    // matmul_improved(m1, m2, z);
-    // TIME_END("SIMD")
-    // printMatrix(z);
-
-    // TIME_START
-    // matmul_improvedMP(m1, m2, t);
-    // TIME_END("openMP")
-    // printMatrix(t);
     TIME_START
-    matmul_improvedMP(m1, m2, x);
+    oldMul(m1, m2, x);
+    TIME_END("oldMul")
+
+    TIME_START
+    matmul_plain(m1, m2, y);
+    TIME_END("Plain")
+
+    TIME_START
+    matmul_improved(m1, m2, z);
+    TIME_END("SIMD")
+
+    TIME_START
+    matmul_improvedMP(m1, m2, t);
     TIME_END("openMP")
-    // printMatrix(x);
-    // printf("\n");
 
     TIME_START
-    matmul_improvedDIV(m1, m2, z);
+    matmul_improvedDIV(m1, m2, u);
     TIME_END("DIV")
-    // printMatrix(z);
-    // printf("\n");
 
-    TIME_START
-    matmul_BLAS(m1, m2, t);
-    TIME_END("BLAS")
+    // TIME_START
+    // matmul_BLAS(m1, m2, v);
+    // TIME_END("BLAS")
     
 
     deleteMatrix(&m1);
@@ -71,4 +64,6 @@ int main() {
     deleteMatrix(&y);
     deleteMatrix(&z);
     deleteMatrix(&t);
+    deleteMatrix(&u);
+    deleteMatrix(&v);
 }

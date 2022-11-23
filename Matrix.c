@@ -77,7 +77,3 @@ int printMatrix(const struct Matrix* mpointer) {
     }
     return 50;
 }
-
-void printError(int errCode) {
-    
-}
